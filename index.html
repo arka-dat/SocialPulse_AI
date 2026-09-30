@@ -4,6 +4,74 @@
 <title>SocialPulse AI – Social Media Analytics</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
+/* SocialPulse AI — Startup Loader */
+#sp-loader{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:22px;
+  background:radial-gradient(circle at center,#08384a 0%,#04131f 42%,#020912 100%);
+  opacity:1;
+  visibility:visible;
+  transition:opacity .8s ease, visibility .8s ease;
+}
+#sp-loader.sp-loader-hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.sp-loader-logo{
+  width:115px;
+  height:115px;
+  object-fit:contain;
+  border-radius:24px;
+  filter:drop-shadow(0 0 24px rgba(0,220,255,.45));
+  animation:sp-logo-pulse 1.8s ease-in-out infinite;
+}
+.sp-loader-title{
+  margin:0;
+  color:#e6f7fb;
+  font-size:clamp(1.35rem,4vw,2rem);
+  font-weight:700;
+  letter-spacing:.04em;
+}
+.sp-loader-subtitle{
+  margin:-12px 0 0;
+  color:#8fb3c4;
+  font-size:.85rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.sp-loader-bar{
+  width:min(220px,55vw);
+  height:3px;
+  overflow:hidden;
+  border-radius:99px;
+  background:rgba(255,255,255,.12);
+}
+.sp-loader-bar::after{
+  content:"";
+  display:block;
+  width:45%;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,transparent,#25d9ff,#fff,transparent);
+  animation:sp-loader-slide 1.15s ease-in-out infinite;
+}
+@keyframes sp-logo-pulse{
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 18px rgba(0,220,255,.35))}
+  50%{transform:scale(1.06);filter:drop-shadow(0 0 34px rgba(0,220,255,.7))}
+}
+@keyframes sp-loader-slide{
+  from{transform:translateX(-150%)}
+  to{transform:translateX(330%)}
+}
+</style>
+<style>
 :root{--bg:#020912;--mut:#8fb3c4;--txt:#e6f7fb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-behavior:smooth;scroll-padding-top:calc(80px + env(safe-area-inset-top,0px))}
 body{position:relative;isolation:isolate;background:linear-gradient(145deg,#061322 0%,#020912 48%,#071526 100%);background-size:180% 180%;animation:base-shift 32s ease-in-out infinite alternate;color:var(--txt);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
@@ -61,6 +129,14 @@ body::after{content:"";position:fixed;inset:-45%;z-index:-2;pointer-events:none;
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.sec{opacity:1;transform:none}}
 </style></head>
 <body>
+<!-- SocialPulse AI Startup Loader -->
+<div id="sp-loader" aria-label="Loading SocialPulse AI">
+  <img class="sp-loader-logo" src="socialpulse-logo.png" alt="SocialPulse AI">
+  <h1 class="sp-loader-title">SocialPulse AI</h1>
+  <p class="sp-loader-subtitle">Social Media Analytics</p>
+  <div class="sp-loader-bar" aria-hidden="true"></div>
+</div>
+
 <div id="network-bg" aria-hidden="true"></div>
 <div class="ambient a"></div><div class="ambient b"></div><div class="ambient c"></div>
 <header class="sticky top-0 z-40 h-[88px] md:h-[112px] flex items-center gap-3 px-4 md:px-10 border-b border-cyan-900/50 bg-[#030c18]/90 backdrop-blur" style="top:env(safe-area-inset-top,0px)">
@@ -162,3 +238,16 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
  }else console.warn('Vanta.NET could not be loaded; keeping the CSS background.');
 }
 </script></body></html>
+
+<script>
+/* Keep the splash visible for 4 seconds, then reveal the dashboard smoothly. */
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const loader = document.getElementById("sp-loader");
+    if (loader) {
+      loader.classList.add("sp-loader-hide");
+      setTimeout(() => loader.remove(), 900);
+    }
+  }, 4000);
+});
+</script>
